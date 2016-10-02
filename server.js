@@ -8,7 +8,7 @@ const path = require('path');
 require('dotenv').config();
 
 const databaseUri = 'mongodb://parse:parse@ds033337.mongolab.com:33337/parse-server-test';
-const allowInsecureHTTP = false;
+const allowInsecureHTTP = true;
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
