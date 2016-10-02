@@ -37,6 +37,12 @@ var dashboard = new ParseDashboard({
       "masterKey": "master",
       "appName": "todo"
     }
+  ],
+  "users": [
+    {
+      "user": process.env.DB_USER_NAME,
+      "pass": process.env.DB_PASSWORD
+    }
   ]
 }, allowInsecureHTTP);
 
