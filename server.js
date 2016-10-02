@@ -1,12 +1,13 @@
 // Example express application adding the parse-server module to expose Parse
 // compatible API routes.
 
-var express = require('express');
-var ParseServer = require('parse-server').ParseServer;
-var path = require('path');
+const express = require('express');
+const ParseServer = require('parse-server').ParseServer;
+const ParseDashboard = require('parse-dashboard');
+const path = require('path');
 require('dotenv').config();
 
-var databaseUri = 'mongodb://parse:parse@ds033337.mongolab.com:33337/parse-server-test';
+const databaseUri = 'mongodb://parse:parse@ds033337.mongolab.com:33337/parse-server-test';
 
 if (!databaseUri) {
   console.log('DATABASE_URI not specified, falling back to localhost.');
@@ -26,6 +27,17 @@ var api = new ParseServer({
 // If you wish you require them, you can set them as options in the initialization above:
 // javascriptKey, restAPIKey, dotNetKey, clientKey
 
+var dashboard = new ParseDashboard({
+  "apps": [
+    {
+      "serverURL": "http://localhost:1337/parse",
+      "appId": "app",
+      "masterKey": "master",
+      "appName": "todo"
+    }
+  ]
+});
+
 var app = express();
 
 // Serve static assets from the /public folder
@@ -39,6 +51,9 @@ app.use(mountPath, api);
 app.get('/', function(req, res) {
   res.status(200).send('I dream of being a website.  Please star the parse-server repo on GitHub!');
 });
+
+// make the Parse Dashboard available at /dashboard
+app.use('/dashboard', dashboard);
 
 // There will be a test page available on the /test path of your server url
 // Remove this before launching your app

@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "dashboard": "parse-dashboard --config parse-dashboard-config.json",
     "test": "jest"
   },
   "repository": {
