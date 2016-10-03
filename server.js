@@ -8,6 +8,9 @@ const path = require('path');
 require('dotenv').config();
 
 const databaseUri = 'mongodb://parse:parse@ds033337.mongolab.com:33337/parse-server-test';
+const serverUrl = process.env.SERVER_URL || 'http://localhost:1337/parse'; // Don't forget to change to https if needed
+const appId = process.env.APP_ID || 'app';
+const masterKey = process.env.MASTER_KEY || 'master'; //Add your master key here. Keep it secret!
 const allowInsecureHTTP = true;
 
 if (!databaseUri) {
@@ -17,9 +20,9 @@ if (!databaseUri) {
 var api = new ParseServer({
   databaseURI: databaseUri || 'mongodb://parse:parse@ds033337.mongolab.com:33337/parse-server-test',
   cloud: process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-  appId: process.env.APP_ID || 'app',
-  masterKey: process.env.MASTER_KEY || 'master', //Add your master key here. Keep it secret!
-  serverURL: process.env.SERVER_URL || 'http://localhost:1337/parse',  // Don't forget to change to https if needed
+  appId: appId,
+  masterKey: masterKey,
+  serverURL: serverUrl,
   liveQuery: {
     classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
   }
@@ -32,9 +35,9 @@ var dashboard = new ParseDashboard({
   "allowInsecureHTTP": allowInsecureHTTP,
   "apps": [
     {
-      "serverURL": "http://localhost:1337/parse",
-      "appId": "app",
-      "masterKey": "master",
+      "serverURL": serverUrl,
+      "appId": appId,
+      "masterKey": masterKey,
       "appName": "todo"
     }
   ],
